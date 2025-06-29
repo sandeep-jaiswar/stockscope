@@ -1,129 +1,146 @@
 'use client';
 
-import { TrendingUp, Search, BarChart3, Activity, Zap, Shield, Clock } from 'lucide-react';
+import { 
+  ChartBarIcon, 
+  MagnifyingGlassIcon, 
+  BoltIcon, 
+  ShieldCheckIcon, 
+  ClockIcon,
+  TrendingUpIcon,
+  BuildingOfficeIcon,
+  UserGroupIcon,
+  CheckBadgeIcon,
+  SparklesIcon
+} from '@heroicons/react/24/outline';
 import SearchBar from '@/components/search-bar';
+import Card from '@/components/ui/card';
 
 export default function Home() {
   const features = [
     {
-      icon: Search,
+      icon: MagnifyingGlassIcon,
       title: "Smart Search",
       description: "Intelligent stock search with real-time suggestions, recent searches, and comprehensive company data.",
-      color: "blue"
+      color: "primary"
     },
     {
-      icon: BarChart3,
+      icon: ChartBarIcon,
       title: "Advanced Analytics",
       description: "Interactive charts, technical indicators, and detailed financial metrics with industry comparisons.",
-      color: "green"
+      color: "success"
     },
     {
-      icon: Activity,
+      icon: TrendingUpIcon,
       title: "Strategy Backtesting",
       description: "Test trading strategies with historical data using natural language queries and get detailed performance analysis.",
-      color: "purple"
+      color: "warning"
     },
     {
-      icon: Zap,
+      icon: BoltIcon,
       title: "Real-time Data",
       description: "Live market data, price alerts, and instant updates to keep you informed of market movements.",
-      color: "yellow"
+      color: "error"
     },
     {
-      icon: Shield,
+      icon: ShieldCheckIcon,
       title: "Risk Analysis",
       description: "Comprehensive risk metrics including beta, volatility, and drawdown analysis for informed decisions.",
-      color: "red"
+      color: "secondary"
     },
     {
-      icon: Clock,
+      icon: ClockIcon,
       title: "Portfolio Tracking",
       description: "Track your investments, monitor performance, and get personalized insights and recommendations.",
-      color: "indigo"
+      color: "primary"
     }
   ];
 
-  const getColorClasses = (color: string) => {
-    const colors = {
-      blue: "from-blue-500 to-blue-600 bg-blue-100 text-blue-600",
-      green: "from-green-500 to-green-600 bg-green-100 text-green-600",
-      purple: "from-purple-500 to-purple-600 bg-purple-100 text-purple-600",
-      yellow: "from-yellow-500 to-yellow-600 bg-yellow-100 text-yellow-600",
-      red: "from-red-500 to-red-600 bg-red-100 text-red-600",
-      indigo: "from-indigo-500 to-indigo-600 bg-indigo-100 text-indigo-600"
-    };
-    return colors[color as keyof typeof colors] || colors.blue;
-  };
+  const stats = [
+    { label: "Stocks Tracked", value: "10,000+", icon: BuildingOfficeIcon },
+    { label: "Backtests Run", value: "50,000+", icon: ChartBarIcon },
+    { label: "Active Users", value: "25,000+", icon: UserGroupIcon },
+    { label: "Success Rate", value: "94%", icon: CheckBadgeIcon }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen gradient-background">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600/10 to-secondary-600/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
           <div className="text-center">
             {/* Logo and Title */}
-            <div className="flex items-center justify-center mb-8">
-              <div className="p-4 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-lg mr-4">
-                <TrendingUp className="h-8 w-8 text-white" />
+            <div className="flex items-center justify-center mb-8 animate-fade-in">
+              <div className="p-4 gradient-primary rounded-2xl shadow-lg mr-4">
+                <TrendingUpIcon className="h-8 w-8 text-white" />
               </div>
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                 StockScope
               </h1>
             </div>
             
-            <p className="text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
-              Professional-grade stock analysis and backtesting platform
-            </p>
-            
-            <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
-              Search any stock, analyze technical indicators, backtest trading strategies, 
-              and make data-driven investment decisions with our comprehensive financial tools.
-            </p>
+            <div className="animate-slide-up">
+              <p className="text-xl md:text-2xl text-secondary-600 mb-4 max-w-3xl mx-auto leading-relaxed text-balance">
+                Professional-grade stock analysis and backtesting platform
+              </p>
+              
+              <p className="text-lg text-secondary-500 mb-12 max-w-2xl mx-auto text-balance">
+                Search any stock, analyze technical indicators, backtest trading strategies, 
+                and make data-driven investment decisions with our comprehensive financial tools.
+              </p>
+            </div>
 
             {/* Search Section */}
-            <div className="mb-16">
+            <div className="mb-16 animate-scale-in">
               <SearchBar placeholder="Search stocks by symbol, name, or industry..." />
-              <p className="text-sm text-gray-500 mt-3">
+              <p className="text-sm text-secondary-500 mt-3 flex items-center justify-center gap-2">
+                <SparklesIcon className="h-4 w-4" />
                 Try searching for: AAPL, Tesla, Microsoft, or "Technology"
               </p>
             </div>
 
             {/* Feature Cards */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
               {features.map((feature, index) => {
                 const Icon = feature.icon;
-                const colorClasses = getColorClasses(feature.color);
-                const [gradientClasses, bgClass, textClass] = colorClasses.split(' ');
                 
                 return (
-                  <div
+                  <Card
                     key={index}
-                    className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 group hover:-translate-y-1"
+                    variant="default"
+                    padding="lg"
+                    hover
+                    className="glass animate-fade-in group"
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className={`p-3 ${bgClass} rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className={`h-6 w-6 ${textClass}`} />
+                    <div className={`p-3 bg-${feature.color}-100 text-${feature.color}-600 rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                  </div>
+                    <h3 className="text-lg font-semibold text-secondary-900 mb-3">{feature.title}</h3>
+                    <p className="text-secondary-600 leading-relaxed">{feature.description}</p>
+                  </Card>
                 );
               })}
             </div>
 
             {/* Stats Section */}
-            <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              {[
-                { label: "Stocks Tracked", value: "10,000+" },
-                { label: "Backtests Run", value: "50,000+" },
-                { label: "Active Users", value: "25,000+" },
-                { label: "Success Rate", value: "94%" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>
-              ))}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+              {stats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <div 
+                    key={index} 
+                    className="text-center animate-fade-in"
+                    style={{ animationDelay: `${(index + 6) * 100}ms` }}
+                  >
+                    <div className="flex items-center justify-center mb-2">
+                      <Icon className="h-6 w-6 text-primary-600 mr-2" />
+                      <div className="text-3xl font-bold text-secondary-900">{stat.value}</div>
+                    </div>
+                    <div className="text-sm text-secondary-600">{stat.label}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -132,7 +149,7 @@ export default function Home() {
       {/* Bottom Wave */}
       <div className="relative">
         <svg
-          className="absolute bottom-0 w-full h-20 text-white"
+          className="absolute bottom-0 w-full h-20 text-white dark:text-secondary-900"
           fill="currentColor"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
