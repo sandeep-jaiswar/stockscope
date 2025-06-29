@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { TrendingUp, TrendingDown, BarChart3, Activity, Info, Building2, Calendar, DollarSign } from 'lucide-react';
 import { Stock, ChartData } from '@/lib/types';
 import { cn, formatCurrency, formatPercentage, formatNumber, getChangeColorClass, getRelativeTime } from '@/lib/utils';
@@ -77,7 +77,7 @@ export default function StockDetails({ stock }: StockDetailsProps) {
   const industryPeers = getIndustryPeers(stock.symbol);
 
   // Load chart data when timeframe changes
-  useState(() => {
+  useEffect(() => {
     const loadChartData = async () => {
       setIsLoadingChart(true);
       try {
@@ -93,7 +93,7 @@ export default function StockDetails({ stock }: StockDetailsProps) {
     };
 
     loadChartData();
-  });
+  }, [selectedTimeframe, stock.symbol]);
 
   const keyMetrics = [
     { 

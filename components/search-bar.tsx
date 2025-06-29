@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   MagnifyingGlassIcon, 
-  TrendingUpIcon, 
+  ArrowTrendingUpIcon, 
   ClockIcon,
   XMarkIcon 
 } from '@heroicons/react/24/outline';
@@ -234,7 +234,7 @@ export default function SearchBar({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <div className="p-2 gradient-primary rounded-lg flex-shrink-0">
-                        <TrendingUpIcon className="h-4 w-4 text-white" />
+                        <ArrowTrendingUpIcon className="h-4 w-4 text-white" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="font-semibold text-secondary-900">{stock.symbol}</div>

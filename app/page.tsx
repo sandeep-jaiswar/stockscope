@@ -6,7 +6,7 @@ import {
   BoltIcon, 
   ShieldCheckIcon, 
   ClockIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   BuildingOfficeIcon,
   UserGroupIcon,
   CheckBadgeIcon,
@@ -30,7 +30,7 @@ export default function Home() {
       color: "success"
     },
     {
-      icon: TrendingUpIcon,
+      icon: ArrowTrendingUpIcon,
       title: "Strategy Backtesting",
       description: "Test trading strategies with historical data using natural language queries and get detailed performance analysis.",
       color: "warning"
@@ -72,7 +72,7 @@ export default function Home() {
             {/* Logo and Title */}
             <div className="flex items-center justify-center mb-8 animate-fade-in">
               <div className="p-4 gradient-primary rounded-2xl shadow-lg mr-4">
-                <TrendingUpIcon className="h-8 w-8 text-white" />
+                <ArrowTrendingUpIcon className="h-8 w-8 text-white" />
               </div>
               <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                 StockScope
