@@ -2,28 +2,29 @@
 
 import { TrendingUp, Search, BarChart3, Activity } from 'lucide-react';
 import SearchBar from '@/components/search-bar';
-import Header from '@/components/header';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Header */}
-      <Header />
-
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
           <div className="text-center">
-            {/* Main Title */}
-            <div className="mb-8">
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                Advanced Stock Analysis
+            {/* Logo and Title */}
+            <div className="flex items-center justify-center mb-8">
+              <div className="p-4 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-lg mr-4">
+                <TrendingUp className="h-8 w-8 text-white" />
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                StockScope
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Search any stock, analyze technical indicators, and test your trading strategies with historical data.
-              </p>
             </div>
+            
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Advanced stock analysis and backtesting platform. Search any stock, analyze technical indicators, 
+              and test your trading strategies with historical data.
+            </p>
 
             {/* Search Section */}
             <div className="mb-16">
