@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { Play, Loader2, Zap, Calendar, DollarSign, TrendingUp, BarChart3, AlertCircle } from 'lucide-react';
+import { PlayIcon, BoltIcon, CalendarIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 import { Stock, BacktestResult } from '@/lib/types';
 import { formatCurrency, formatPercentage, generateId } from '@/lib/utils';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import Button from '@/components/ui/button';
+import Card from '@/components/ui/card';
+import Badge from '@/components/ui/badge';
 
 interface BacktestFormProps {
   stock: Stock;
@@ -88,17 +91,17 @@ export default function BacktestForm({ stock }: BacktestFormProps) {
   return (
     <div className="space-y-6">
       {/* Main Backtest Form */}
-      <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-200">
+      <Card variant="elevated" padding="xl">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">Strategy Backtester</h2>
-          <p className="text-gray-600 text-lg">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-3">Strategy Backtester</h2>
+          <p className="text-secondary-600 text-lg">
             Describe your trading strategy in plain English and get comprehensive performance analysis.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="strategy" className="block text-sm font-semibold text-gray-700 mb-3">
+            <label htmlFor="strategy" className="block text-sm font-semibold text-secondary-700 mb-3">
               Strategy Description
             </label>
             <textarea
@@ -107,14 +110,14 @@ export default function BacktestForm({ stock }: BacktestFormProps) {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={`Example: "Buy ${stock.symbol} when the stock drops 10% from its 30-day high, hold for 6 months, then sell"`}
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all duration-200"
+              className="w-full px-4 py-3 border border-secondary-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none transition-all duration-200"
               disabled={isLoading}
             />
           </div>
 
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <Zap className="h-5 w-5 text-blue-600 mr-2" />
+          <Card variant="gradient" padding="lg">
+            <h3 className="text-lg font-semibold text-secondary-800 mb-4 flex items-center">
+              <BoltIcon className="h-5 w-5 text-primary-600 mr-2" />
               Strategy Examples
             </h3>
             <div className="grid gap-3">
@@ -124,85 +127,81 @@ export default function BacktestForm({ stock }: BacktestFormProps) {
                   type="button"
                   onClick={() => setQuery(sample)}
                   disabled={isLoading}
-                  className="text-left p-3 bg-white rounded-lg hover:bg-blue-50 border border-gray-200 hover:border-blue-300 transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="text-left p-3 bg-white rounded-lg hover:bg-primary-50 border border-secondary-200 hover:border-primary-300 transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {sample}
                 </button>
               ))}
             </div>
-          </div>
+          </Card>
 
-          <button
+          <Button
             type="submit"
-            disabled={!query.trim() || isLoading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            variant="primary"
+            size="lg"
+            fullWidth
+            loading={isLoading}
+            disabled={!query.trim()}
+            icon={!isLoading ? <PlayIcon className="h-5 w-5" /> : undefined}
           >
-            {isLoading ? (
-              <>
-                <LoadingSpinner size="sm" className="border-white border-t-transparent" />
-                <span>Running Backtest...</span>
-              </>
-            ) : (
-              <>
-                <Play className="h-5 w-5" />
-                <span>Execute Backtest</span>
-              </>
-            )}
-          </button>
+            {isLoading ? 'Running Backtest...' : 'Execute Backtest'}
+          </Button>
         </form>
 
         {error && (
-          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+          <Card variant="outlined" padding="md" className="mt-6 border-error-300 bg-error-50">
             <div className="flex items-center">
-              <AlertCircle className="h-5 w-5 text-red-600 mr-2" />
-              <p className="text-red-700 font-medium">Error</p>
+              <InformationCircleIcon className="h-5 w-5 text-error-600 mr-2" />
+              <p className="text-error-700 font-medium">Error</p>
             </div>
-            <p className="text-red-600 mt-1">{error}</p>
-          </div>
+            <p className="text-error-600 mt-1">{error}</p>
+          </Card>
         )}
 
         {result && (
-          <div className="mt-8 p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-200">
-            <h3 className="text-lg font-semibold text-green-800 mb-4 flex items-center">
-              <Calendar className="h-5 w-5 mr-2" />
+          <Card variant="gradient" padding="lg" className="mt-8 bg-gradient-to-br from-success-50 to-success-100 border-success-200">
+            <h3 className="text-lg font-semibold text-success-800 mb-4 flex items-center">
+              <CalendarIcon className="h-5 w-5 mr-2" />
               Backtest Results
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div className="bg-white rounded-lg p-4">
+              <Card variant="default" padding="md">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Total Return</span>
-                  <span className={`font-bold ${result.totalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className="text-sm text-secondary-600">Total Return</span>
+                  <Badge variant={result.totalReturn >= 0 ? 'success' : 'error'} size="md">
                     {formatPercentage(result.totalReturn)}
-                  </span>
+                  </Badge>
                 </div>
-              </div>
+              </Card>
               
-              <div className="bg-white rounded-lg p-4">
+              <Card variant="default" padding="md">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Sharpe Ratio</span>
-                  <span className="font-bold text-gray-900">{result.sharpeRatio.toFixed(2)}</span>
+                  <span className="text-sm text-secondary-600">Sharpe Ratio</span>
+                  <span className="font-bold text-secondary-900">{result.sharpeRatio.toFixed(2)}</span>
                 </div>
-              </div>
+              </Card>
               
-              <div className="bg-white rounded-lg p-4">
+              <Card variant="default" padding="md">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Max Drawdown</span>
-                  <span className="font-bold text-red-600">-{result.maxDrawdown.toFixed(1)}%</span>
+                  <span className="text-sm text-secondary-600">Max Drawdown</span>
+                  <Badge variant="error" size="md">
+                    -{result.maxDrawdown.toFixed(1)}%
+                  </Badge>
                 </div>
-              </div>
+              </Card>
               
-              <div className="bg-white rounded-lg p-4">
+              <Card variant="default" padding="md">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Win Rate</span>
-                  <span className="font-bold text-gray-900">{result.winRate.toFixed(1)}%</span>
+                  <span className="text-sm text-secondary-600">Win Rate</span>
+                  <span className="font-bold text-secondary-900">{result.winRate.toFixed(1)}%</span>
                 </div>
-              </div>
+              </Card>
             </div>
 
-            <div className="bg-white rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2">Performance Summary</h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
+            <Card variant="default" padding="md">
+              <h4 className="font-semibold text-secondary-900 mb-2">Performance Summary</h4>
+              <p className="text-secondary-700 text-sm leading-relaxed">
                 Strategy generated <strong>{formatPercentage(result.totalReturn)}</strong> total return 
                 over 1 year with <strong>{result.totalTrades}</strong> trades. 
                 Maximum drawdown was <strong>{result.maxDrawdown.toFixed(1)}%</strong> with a 
@@ -212,41 +211,42 @@ export default function BacktestForm({ stock }: BacktestFormProps) {
                   `Underperformed market benchmark by ${formatPercentage(result.benchmarkReturn - result.totalReturn)}.`
                 }
               </p>
-            </div>
-          </div>
+            </Card>
+          </Card>
         )}
-      </div>
+      </Card>
 
       {/* Backtest History */}
       {backtestHistory.length > 0 && (
-        <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-200">
+        <Card variant="elevated" padding="xl">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-gray-900">Recent Backtests</h3>
-            <button
+            <h3 className="text-xl font-bold text-secondary-900">Recent Backtests</h3>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={clearHistory}
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200"
             >
               Clear History
-            </button>
+            </Button>
           </div>
           
           <div className="space-y-4">
             {backtestHistory.slice(0, 3).map((test) => (
-              <div key={test.id} className="p-4 bg-gray-50 rounded-xl">
+              <Card key={test.id} variant="ghost" padding="md">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-gray-900">{test.symbol}</span>
-                  <span className={`font-bold ${test.totalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <Badge variant="primary" size="md">{test.symbol}</Badge>
+                  <Badge variant={test.totalReturn >= 0 ? 'success' : 'error'} size="md">
                     {formatPercentage(test.totalReturn)}
-                  </span>
+                  </Badge>
                 </div>
-                <p className="text-sm text-gray-600 truncate">{test.strategy}</p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-sm text-secondary-600 truncate">{test.strategy}</p>
+                <p className="text-xs text-secondary-500 mt-1">
                   {new Date(test.createdAt).toLocaleDateString()}
                 </p>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );

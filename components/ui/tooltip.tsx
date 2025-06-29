@@ -4,17 +4,17 @@ import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface TooltipProps {
-  content: string;
   children: React.ReactNode;
+  content: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   className?: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ 
-  content, 
-  children, 
+const Tooltip: React.FC<TooltipProps> = ({
+  children,
+  content,
   position = 'top',
-  className 
+  className
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -26,21 +26,34 @@ const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <div 
-      className="relative inline-block"
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-    >
-      {children}
+    <div className="relative inline-block">
+      <div
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => setIsVisible(false)}
+        onFocus={() => setIsVisible(true)}
+        onBlur={() => setIsVisible(false)}
+      >
+        {children}
+      </div>
       {isVisible && (
         <div
           className={cn(
-            'absolute z-50 px-2 py-1 text-xs text-white bg-secondary-900 rounded-lg shadow-lg whitespace-nowrap animate-fade-in',
+            'absolute z-50 px-2 py-1 text-xs text-white bg-secondary-900 rounded-lg shadow-lg whitespace-nowrap',
             positionClasses[position],
             className
           )}
+          role="tooltip"
         >
           {content}
+          <div
+            className={cn(
+              'absolute w-2 h-2 bg-secondary-900 transform rotate-45',
+              position === 'top' && 'top-full left-1/2 -translate-x-1/2 -mt-1',
+              position === 'bottom' && 'bottom-full left-1/2 -translate-x-1/2 -mb-1',
+              position === 'left' && 'left-full top-1/2 -translate-y-1/2 -ml-1',
+              position === 'right' && 'right-full top-1/2 -translate-y-1/2 -mr-1'
+            )}
+          />
         </div>
       )}
     </div>

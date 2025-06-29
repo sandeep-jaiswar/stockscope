@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { CHART_COLORS } from './constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -39,15 +38,15 @@ export function formatMarketCap(value: string): string {
 }
 
 export function getChangeColor(change: number): string {
-  if (change > 0) return CHART_COLORS.success;
-  if (change < 0) return CHART_COLORS.danger;
-  return CHART_COLORS.neutral;
+  if (change > 0) return '#22c55e'; // success-500
+  if (change < 0) return '#ef4444'; // error-500
+  return '#64748b'; // secondary-500
 }
 
 export function getChangeColorClass(change: number): string {
-  if (change > 0) return 'text-green-600';
-  if (change < 0) return 'text-red-600';
-  return 'text-gray-600';
+  if (change > 0) return 'text-success-600';
+  if (change < 0) return 'text-error-600';
+  return 'text-secondary-600';
 }
 
 export function debounce<T extends (...args: any[]) => any>(
@@ -114,4 +113,41 @@ export function calculatePerformanceMetrics(prices: number[]) {
     volatility: volatility * 100,
     sharpeRatio: isFinite(sharpeRatio) ? sharpeRatio : 0,
   };
+}
+
+// Design system utility functions
+export function getStatusColor(status: 'success' | 'warning' | 'error' | 'info'): string {
+  const colors = {
+    success: '#22c55e',
+    warning: '#f59e0b',
+    error: '#ef4444',
+    info: '#3b82f6'
+  };
+  return colors[status];
+}
+
+export function getStatusColorClass(status: 'success' | 'warning' | 'error' | 'info'): string {
+  const classes = {
+    success: 'text-success-600',
+    warning: 'text-warning-600',
+    error: 'text-error-600',
+    info: 'text-primary-600'
+  };
+  return classes[status];
+}
+
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + '...';
+}
+
+export function capitalizeFirst(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function formatCompactNumber(num: number): string {
+  if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+  if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+  if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+  return num.toString();
 }

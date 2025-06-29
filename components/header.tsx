@@ -2,9 +2,19 @@
 
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { TrendingUp, Search, Menu, X, Home, BarChart3, Clock } from 'lucide-react';
+import { 
+  ArrowTrendingUpIcon, 
+  MagnifyingGlassIcon, 
+  Bars3Icon, 
+  XMarkIcon, 
+  HomeIcon, 
+  ChartBarIcon, 
+  ClockIcon 
+} from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
 import SearchBar from './search-bar';
+import Button from './ui/button';
+import Card from './ui/card';
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -19,14 +29,14 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
   const isHomePage = pathname === '/';
 
   const navigation = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'Markets', href: '/markets', icon: BarChart3 },
-    { name: 'Watchlist', href: '/watchlist', icon: Clock },
+    { name: 'Home', href: '/', icon: HomeIcon },
+    { name: 'Markets', href: '/markets', icon: ChartBarIcon },
+    { name: 'Watchlist', href: '/watchlist', icon: ClockIcon },
   ];
 
   return (
     <>
-      <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      <header className="glass sticky top-0 z-50 border-b border-secondary-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Left Section - Logo & Navigation */}
@@ -36,10 +46,10 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
                 className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200"
                 aria-label="Go to homepage"
               >
-                <div className="p-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl shadow-lg">
-                  <TrendingUp className="h-5 w-5 text-white" />
+                <div className="p-2 gradient-primary rounded-xl shadow-lg">
+                  <ArrowTrendingUpIcon className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                   StockScope
                 </span>
               </button>
@@ -50,19 +60,16 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
                   return (
-                    <button
+                    <Button
                       key={item.name}
+                      variant={isActive ? 'secondary' : 'ghost'}
+                      size="sm"
                       onClick={() => router.push(item.href)}
-                      className={cn(
-                        "flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-all duration-200",
-                        isActive
-                          ? "bg-blue-100 text-blue-700"
-                          : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                      )}
+                      icon={<Icon className="h-4 w-4" />}
+                      className="gap-2"
                     >
-                      <Icon className="h-4 w-4" />
-                      <span>{item.name}</span>
-                    </button>
+                      {item.name}
+                    </Button>
                   );
                 })}
               </nav>
@@ -70,15 +77,15 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
 
             {/* Center Section - Breadcrumb */}
             {currentStock && (
-              <nav className="hidden sm:flex items-center space-x-2 text-sm text-gray-500">
+              <nav className="hidden sm:flex items-center space-x-2 text-sm text-secondary-500">
                 <button
                   onClick={() => router.push('/')}
-                  className="hover:text-gray-700 transition-colors duration-200"
+                  className="hover:text-secondary-700 transition-colors duration-200"
                 >
                   Search
                 </button>
                 <span>/</span>
-                <span className="text-gray-900 font-medium">{currentStock}</span>
+                <span className="text-secondary-900 font-medium">{currentStock}</span>
               </nav>
             )}
 
@@ -94,29 +101,27 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
               </div>
 
               {/* Mobile Search Button */}
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className="lg:hidden flex items-center space-x-2 px-3 py-2 rounded-lg font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
+                icon={<MagnifyingGlassIcon className="h-4 w-4" />}
+                className="lg:hidden"
                 aria-label="Open search"
-              >
-                <Search className="h-4 w-4" />
-              </button>
+              />
 
               {/* Mobile Menu Button */}
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
+                icon={isMobileMenuOpen ? <XMarkIcon className="h-5 w-5" /> : <Bars3Icon className="h-5 w-5" />}
+                className="md:hidden"
                 aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="h-5 w-5" />
-                ) : (
-                  <Menu className="h-5 w-5" />
-                )}
-              </button>
+              />
 
-              {/* User Menu Placeholder */}
-              <div className="hidden sm:block w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              {/* User Avatar Placeholder */}
+              <div className="hidden sm:block w-8 h-8 rounded-full gradient-primary flex items-center justify-center">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
               </div>
             </div>
@@ -124,28 +129,26 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
 
           {/* Mobile Navigation Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-200 py-4">
+            <div className="md:hidden border-t border-secondary-200 py-4">
               <nav className="space-y-2">
                 {navigation.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
                   return (
-                    <button
+                    <Button
                       key={item.name}
+                      variant={isActive ? 'secondary' : 'ghost'}
+                      size="sm"
                       onClick={() => {
                         router.push(item.href);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={cn(
-                        "w-full flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-all duration-200",
-                        isActive
-                          ? "bg-blue-100 text-blue-700"
-                          : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                      )}
+                      icon={<Icon className="h-4 w-4" />}
+                      fullWidth
+                      className="justify-start gap-3"
                     >
-                      <Icon className="h-4 w-4" />
-                      <span>{item.name}</span>
-                    </button>
+                      {item.name}
+                    </Button>
                   );
                 })}
               </nav>
@@ -158,21 +161,21 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
       {isSearchOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setIsSearchOpen(false)} />
-          <div className="relative bg-white p-4">
+          <Card variant="default" padding="lg" className="relative m-4">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Search Stocks</h2>
-              <button
+              <h2 className="text-lg font-semibold text-secondary-900">Search Stocks</h2>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setIsSearchOpen(false)}
-                className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              >
-                <X className="h-5 w-5" />
-              </button>
+                icon={<XMarkIcon className="h-5 w-5" />}
+              />
             </div>
             <SearchBar 
               placeholder="Search stocks by symbol, name, or industry..."
               autoFocus
             />
-          </div>
+          </Card>
         </div>
       )}
     </>
