@@ -2,11 +2,36 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter'
+});
 
 export const metadata: Metadata = {
-  title: 'StockScope - Advanced Stock Analysis & Backtesting',
-  description: 'Search stocks, analyze technical indicators, and backtest trading strategies with our comprehensive financial platform.',
+  title: 'StockScope - Professional Stock Analysis & Backtesting Platform',
+  description: 'Advanced stock analysis, technical indicators, and strategy backtesting. Search stocks, analyze performance, and make data-driven investment decisions with our comprehensive financial platform.',
+  keywords: 'stock analysis, backtesting, technical indicators, financial data, investment research, trading strategies',
+  authors: [{ name: 'StockScope Team' }],
+  creator: 'StockScope',
+  publisher: 'StockScope',
+  robots: 'index, follow',
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#3B82F6',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://stockscope.app',
+    title: 'StockScope - Professional Stock Analysis Platform',
+    description: 'Advanced stock analysis, technical indicators, and strategy backtesting platform for informed investment decisions.',
+    siteName: 'StockScope',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'StockScope - Professional Stock Analysis Platform',
+    description: 'Advanced stock analysis, technical indicators, and strategy backtesting platform for informed investment decisions.',
+    creator: '@stockscope',
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +40,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={inter.variable}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        <div id="root">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
