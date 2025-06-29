@@ -2,80 +2,55 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { getCardClasses } from '@/lib/design-system';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'outlined' | 'ghost';
+  variant?: 'default' | 'elevated' | 'outlined' | 'ghost' | 'gradient';
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   hover?: boolean;
+  children: React.ReactNode;
 }
 
-export default function Card({
-  children,
-  variant = 'default',
-  padding = 'md',
-  hover = false,
-  className,
-  ...props
-}: CardProps) {
-  const baseClasses = getCardClasses(variant);
-  
-  const paddingClasses = {
-    none: '',
-    sm: 'p-4',
-    md: 'p-6',
-    lg: 'p-8',
-    xl: 'p-10',
-  };
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant = 'default', padding = 'md', hover = false, children, ...props }, ref) => {
+    const baseClasses = 'rounded-2xl transition-all duration-200';
+    
+    const variantClasses = {
+      default: 'bg-white border border-secondary-200 shadow-sm',
+      elevated: 'bg-white border border-secondary-200 shadow-lg',
+      outlined: 'bg-white border-2 border-secondary-300',
+      ghost: 'bg-secondary-50 border border-secondary-100',
+      gradient: 'bg-gradient-to-br from-white to-secondary-50 border border-secondary-200 shadow-md'
+    };
 
-  const hoverClass = hover ? 'hover:shadow-lg hover:-translate-y-1 transition-all duration-200' : '';
+    const paddingClasses = {
+      none: '',
+      sm: 'p-3',
+      md: 'p-4',
+      lg: 'p-6',
+      xl: 'p-8'
+    };
 
-  return (
-    <div
-      className={cn(
-        baseClasses,
-        paddingClasses[padding],
-        hoverClass,
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-}
+    const hoverClasses = hover ? 'hover:shadow-xl hover:-translate-y-1 cursor-pointer' : '';
 
-interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string;
-  subtitle?: string;
-  action?: React.ReactNode;
-}
-
-export function CardHeader({ title, subtitle, action, children, className, ...props }: CardHeaderProps) {
-  return (
-    <div className={cn('flex items-center justify-between mb-6', className)} {...props}>
-      <div>
-        {title && <h3 className="text-xl font-semibold text-secondary-900">{title}</h3>}
-        {subtitle && <p className="text-sm text-secondary-600 mt-1">{subtitle}</p>}
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          baseClasses,
+          variantClasses[variant],
+          paddingClasses[padding],
+          hoverClasses,
+          'dark:bg-secondary-900 dark:border-secondary-700',
+          className
+        )}
+        {...props}
+      >
         {children}
       </div>
-      {action && <div>{action}</div>}
-    </div>
-  );
-}
+    );
+  }
+);
 
-export function CardContent({ children, className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div className={cn('', className)} {...props}>
-      {children}
-    </div>
-  );
-}
+Card.displayName = 'Card';
 
-export function CardFooter({ children, className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div className={cn('mt-6 pt-6 border-t border-secondary-200', className)} {...props}>
-      {children}
-    </div>
-  );
-}
+export default Card;

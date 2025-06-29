@@ -4,27 +4,29 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface LoadingSpinnerProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  color?: 'primary' | 'secondary' | 'white';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'primary' | 'secondary' | 'white' | 'current';
   className?: string;
 }
 
-export default function LoadingSpinner({ 
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   size = 'md', 
   color = 'primary',
   className 
-}: LoadingSpinnerProps) {
+}) => {
   const sizeClasses = {
+    xs: 'h-3 w-3',
     sm: 'h-4 w-4',
     md: 'h-6 w-6',
     lg: 'h-8 w-8',
-    xl: 'h-12 w-12',
+    xl: 'h-12 w-12'
   };
 
   const colorClasses = {
-    primary: 'border-primary-600 border-t-transparent',
-    secondary: 'border-secondary-600 border-t-transparent',
-    white: 'border-white border-t-transparent',
+    primary: 'border-primary-200 border-t-primary-600',
+    secondary: 'border-secondary-200 border-t-secondary-600',
+    white: 'border-white/20 border-t-white',
+    current: 'border-current/20 border-t-current'
   };
 
   return (
@@ -41,4 +43,6 @@ export default function LoadingSpinner({
       <span className="sr-only">Loading...</span>
     </div>
   );
-}
+};
+
+export default LoadingSpinner;
