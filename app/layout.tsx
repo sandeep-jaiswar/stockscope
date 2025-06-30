@@ -10,28 +10,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'StockScope - Professional Stock Analysis & Backtesting Platform',
+  title: 'BacktestBuddy - Professional Stock Analysis & Backtesting Platform',
   description: 'Advanced stock analysis, technical indicators, and strategy backtesting. Search stocks, analyze performance, and make data-driven investment decisions with our comprehensive financial platform.',
   keywords: 'stock analysis, backtesting, technical indicators, financial data, investment research, trading strategies',
-  authors: [{ name: 'StockScope Team' }],
-  creator: 'StockScope',
-  publisher: 'StockScope',
+  authors: [{ name: 'BacktestBuddy Team' }],
+  creator: 'BacktestBuddy',
+  publisher: 'BacktestBuddy',
   robots: 'index, follow',
   viewport: 'width=device-width, initial-scale=1',
   themeColor: '#3B82F6',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://stockscope.app',
-    title: 'StockScope - Professional Stock Analysis Platform',
+    url: 'https://backtestbuddy.app',
+    title: 'BacktestBuddy - Professional Stock Analysis Platform',
     description: 'Advanced stock analysis, technical indicators, and strategy backtesting platform for informed investment decisions.',
-    siteName: 'StockScope',
+    siteName: 'BacktestBuddy',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'StockScope - Professional Stock Analysis Platform',
+    title: 'BacktestBuddy - Professional Stock Analysis Platform',
     description: 'Advanced stock analysis, technical indicators, and strategy backtesting platform for informed investment decisions.',
-    creator: '@stockscope',
+    creator: '@backtestbuddy',
   },
 };
 

@@ -49,8 +49,20 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
                 <div className="p-2 gradient-primary rounded-xl shadow-lg">
                   <ArrowTrendingUpIcon className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                  StockScope
+                <span className="text-xl font-bold">
+                  <span className="text-blue-500">B</span>
+                  <span className="text-red-500">a</span>
+                  <span className="text-yellow-500">c</span>
+                  <span className="text-blue-500">k</span>
+                  <span className="text-green-500">t</span>
+                  <span className="text-red-500">e</span>
+                  <span className="text-blue-500">s</span>
+                  <span className="text-yellow-500">t</span>
+                  <span className="text-green-500">B</span>
+                  <span className="text-red-500">u</span>
+                  <span className="text-blue-500">d</span>
+                  <span className="text-yellow-500">d</span>
+                  <span className="text-green-500">y</span>
                 </span>
               </button>
 
@@ -121,8 +133,8 @@ export default function Header({ showBackButton = false, currentStock }: HeaderP
               />
 
               {/* User Avatar Placeholder */}
-              <div className="hidden sm:block w-8 h-8 rounded-full gradient-primary flex items-center justify-center">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
+              <div className="hidden sm:block w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">B</span>
               </div>
             </div>
           </div>

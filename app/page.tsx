@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { 
   ChartBarIcon, 
   MagnifyingGlassIcon, 
@@ -10,49 +11,22 @@ import {
   BuildingOfficeIcon,
   UserGroupIcon,
   CheckBadgeIcon,
-  SparklesIcon
+  SparklesIcon,
+  MicrophoneIcon,
+  CameraIcon
 } from '@heroicons/react/24/outline';
 import SearchBar from '@/components/search-bar';
-import Card from '@/components/ui/card';
 
 export default function Home() {
-  const features = [
-    {
-      icon: MagnifyingGlassIcon,
-      title: "Smart Search",
-      description: "Intelligent stock search with real-time suggestions, recent searches, and comprehensive company data.",
-      color: "primary"
-    },
-    {
-      icon: ChartBarIcon,
-      title: "Advanced Analytics",
-      description: "Interactive charts, technical indicators, and detailed financial metrics with industry comparisons.",
-      color: "success"
-    },
-    {
-      icon: ArrowTrendingUpIcon,
-      title: "Strategy Backtesting",
-      description: "Test trading strategies with historical data using natural language queries and get detailed performance analysis.",
-      color: "warning"
-    },
-    {
-      icon: BoltIcon,
-      title: "Real-time Data",
-      description: "Live market data, price alerts, and instant updates to keep you informed of market movements.",
-      color: "error"
-    },
-    {
-      icon: ShieldCheckIcon,
-      title: "Risk Analysis",
-      description: "Comprehensive risk metrics including beta, volatility, and drawdown analysis for informed decisions.",
-      color: "secondary"
-    },
-    {
-      icon: ClockIcon,
-      title: "Portfolio Tracking",
-      description: "Track your investments, monitor performance, and get personalized insights and recommendations.",
-      color: "primary"
-    }
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const quickSearches = [
+    "AAPL stock analysis",
+    "Tesla backtest strategy", 
+    "Microsoft dividend history",
+    "NVIDIA technical indicators",
+    "S&P 500 momentum strategy",
+    "Apple vs Google comparison"
   ];
 
   const stats = [
@@ -63,100 +37,155 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen gradient-background">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600/10 to-secondary-600/10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
-          <div className="text-center">
-            {/* Logo and Title */}
-            <div className="flex items-center justify-center mb-8 animate-fade-in">
-              <div className="p-4 gradient-primary rounded-2xl shadow-lg mr-4">
-                <ArrowTrendingUpIcon className="h-8 w-8 text-white" />
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4">
+        <div className="flex items-center space-x-6">
+          <button className="text-sm text-gray-700 hover:underline">About</button>
+          <button className="text-sm text-gray-700 hover:underline">Features</button>
+        </div>
+        <div className="flex items-center space-x-4">
+          <button className="text-sm text-gray-700 hover:underline">Sign in</button>
+          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+            <span className="text-white text-sm font-medium">B</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-4">
+        {/* Logo */}
+        <div className="mb-8">
+          <h1 className="text-7xl font-normal text-center mb-2">
+            <span className="text-blue-500">B</span>
+            <span className="text-red-500">a</span>
+            <span className="text-yellow-500">c</span>
+            <span className="text-blue-500">k</span>
+            <span className="text-green-500">t</span>
+            <span className="text-red-500">e</span>
+            <span className="text-blue-500">s</span>
+            <span className="text-yellow-500">t</span>
+            <span className="text-green-500">B</span>
+            <span className="text-red-500">u</span>
+            <span className="text-blue-500">d</span>
+            <span className="text-yellow-500">d</span>
+            <span className="text-green-500">y</span>
+          </h1>
+        </div>
+
+        {/* Search Bar */}
+        <div className="w-full max-w-2xl mb-8">
+          <div className="relative">
+            <div className="flex items-center bg-white border border-gray-300 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200 px-4 py-3">
+              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 mr-3" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search stocks, strategies, or ask questions..."
+                className="flex-1 text-base text-gray-900 placeholder-gray-500 bg-transparent border-none outline-none"
+              />
+              <div className="flex items-center space-x-3 ml-3">
+                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                  <MicrophoneIcon className="h-4 w-4 text-gray-600" />
+                </button>
+                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                  <CameraIcon className="h-4 w-4 text-gray-600" />
+                </button>
               </div>
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                StockScope
-              </h1>
             </div>
-            
-            <div className="animate-slide-up">
-              <p className="text-xl md:text-2xl text-secondary-600 mb-4 max-w-3xl mx-auto leading-relaxed text-balance">
-                Professional-grade stock analysis and backtesting platform
-              </p>
-              
-              <p className="text-lg text-secondary-500 mb-12 max-w-2xl mx-auto text-balance">
-                Search any stock, analyze technical indicators, backtest trading strategies, 
-                and make data-driven investment decisions with our comprehensive financial tools.
-              </p>
-            </div>
+          </div>
 
-            {/* Search Section */}
-            <div className="mb-16 animate-scale-in">
-              <SearchBar placeholder="Search stocks by symbol, name, or industry..." />
-              <p className="text-sm text-secondary-500 mt-3 flex items-center justify-center gap-2">
-                <SparklesIcon className="h-4 w-4" />
-                Try searching for: AAPL, Tesla, Microsoft, or "Technology"
-              </p>
-            </div>
-
-            {/* Feature Cards */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
-              {features.map((feature, index) => {
-                const Icon = feature.icon;
-                
-                return (
-                  <Card
+          {/* Search Suggestions */}
+          {searchQuery && (
+            <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+              {quickSearches
+                .filter(search => search.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map((suggestion, index) => (
+                  <button
                     key={index}
-                    variant="default"
-                    padding="lg"
-                    hover
-                    className="glass animate-fade-in group"
-                    style={{ animationDelay: `${index * 100}ms` }}
+                    className="w-full px-4 py-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0 flex items-center space-x-3"
+                    onClick={() => setSearchQuery(suggestion)}
                   >
-                    <div className={`p-3 bg-${feature.color}-100 text-${feature.color}-600 rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-secondary-900 mb-3">{feature.title}</h3>
-                    <p className="text-secondary-600 leading-relaxed">{feature.description}</p>
-                  </Card>
-                );
-              })}
+                    <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
+                    <span className="text-gray-900">{suggestion}</span>
+                  </button>
+                ))}
             </div>
+          )}
+        </div>
 
-            {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        {/* Action Buttons */}
+        <div className="flex space-x-4 mb-12">
+          <button className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded border border-gray-300 transition-colors duration-200 font-medium">
+            Stock Analysis
+          </button>
+          <button className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded border border-gray-300 transition-colors duration-200 font-medium">
+            I'm Feeling Lucky
+          </button>
+        </div>
+
+        {/* Quick Suggestions */}
+        <div className="text-center mb-8">
+          <p className="text-sm text-gray-600 mb-3">Popular searches:</p>
+          <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
+            {quickSearches.slice(0, 4).map((search, index) => (
+              <button
+                key={index}
+                onClick={() => setSearchQuery(search)}
+                className="px-3 py-1 text-sm text-blue-600 hover:underline"
+              >
+                {search}
+              </button>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 border-t border-gray-200">
+        <div className="px-6 py-3">
+          <div className="flex items-center justify-between text-sm text-gray-600">
+            <div className="flex items-center space-x-6">
+              <span>United States</span>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 px-6 py-3">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+            <div className="flex flex-wrap items-center space-x-6 text-sm text-gray-600">
+              <button className="hover:underline">Advertising</button>
+              <button className="hover:underline">Business</button>
+              <button className="hover:underline">How BacktestBuddy works</button>
+            </div>
+            <div className="flex flex-wrap items-center space-x-6 text-sm text-gray-600">
+              <button className="hover:underline">Privacy</button>
+              <button className="hover:underline">Terms</button>
+              <button className="hover:underline">Settings</button>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <div className="bg-white border-t border-gray-200 px-6 py-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {stats.map((stat, index) => {
                 const Icon = stat.icon;
                 return (
-                  <div 
-                    key={index} 
-                    className="text-center animate-fade-in"
-                    style={{ animationDelay: `${(index + 6) * 100}ms` }}
-                  >
-                    <div className="flex items-center justify-center mb-2">
-                      <Icon className="h-6 w-6 text-primary-600 mr-2" />
-                      <div className="text-3xl font-bold text-secondary-900">{stat.value}</div>
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-center justify-center">
+                      <Icon className="h-6 w-6 text-blue-600 mr-2" />
+                      <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
                     </div>
-                    <div className="text-sm text-secondary-600">{stat.label}</div>
+                    <div className="text-sm text-gray-600">{stat.label}</div>
                   </div>
                 );
               })}
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom Wave */}
-      <div className="relative">
-        <svg
-          className="absolute bottom-0 w-full h-20 text-white dark:text-secondary-900"
-          fill="currentColor"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1200,60 L1200,120 L0,120 Z" />
-        </svg>
-      </div>
+      </footer>
     </div>
   );
 }
