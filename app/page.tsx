@@ -73,7 +73,7 @@ export default function Home() {
           </h1>
         </div>
 
-        {/* Search Bar - Using the updated SearchBar component */}
+        {/* Search Bar */}
         <div className="w-full max-w-2xl mb-8">
           <SearchBar placeholder="Search stocks, strategies, or ask questions..." />
         </div>
