@@ -73,46 +73,9 @@ export default function Home() {
           </h1>
         </div>
 
-        {/* Search Bar */}
+        {/* Search Bar - Using the updated SearchBar component */}
         <div className="w-full max-w-2xl mb-8">
-          <div className="relative">
-            <div className="flex items-center bg-white border border-gray-300 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200 px-4 py-3">
-              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 mr-3" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search stocks, strategies, or ask questions..."
-                className="flex-1 text-base text-gray-900 placeholder-gray-500 bg-transparent border-none outline-none"
-              />
-              <div className="flex items-center space-x-3 ml-3">
-                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
-                  <MicrophoneIcon className="h-4 w-4 text-gray-600" />
-                </button>
-                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
-                  <CameraIcon className="h-4 w-4 text-gray-600" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Search Suggestions */}
-          {searchQuery && (
-            <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
-              {quickSearches
-                .filter(search => search.toLowerCase().includes(searchQuery.toLowerCase()))
-                .map((suggestion, index) => (
-                  <button
-                    key={index}
-                    className="w-full px-4 py-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0 flex items-center space-x-3"
-                    onClick={() => setSearchQuery(suggestion)}
-                  >
-                    <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
-                    <span className="text-gray-900">{suggestion}</span>
-                  </button>
-                ))}
-            </div>
-          )}
+          <SearchBar placeholder="Search stocks, strategies, or ask questions..." />
         </div>
 
         {/* Action Buttons */}
@@ -132,7 +95,6 @@ export default function Home() {
             {quickSearches.slice(0, 4).map((search, index) => (
               <button
                 key={index}
-                onClick={() => setSearchQuery(search)}
                 className="px-3 py-1 text-sm text-blue-600 hover:underline"
               >
                 {search}

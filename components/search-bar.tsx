@@ -126,7 +126,7 @@ export default function SearchBar({
     setSelectedIndex(-1);
     setSuggestions([]);
     
-    // Navigate to stock page
+    // Navigate to stock details page
     router.push(`/stock/${stock.symbol}`);
   }, [recentSearches, setRecentSearches, router]);
 
@@ -155,11 +155,24 @@ export default function SearchBar({
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (suggestions.length > 0) {
+      handleSelect(suggestions[0]);
+    } else if (query.trim()) {
+      // Try to navigate to the symbol directly
+      const upperQuery = query.trim().toUpperCase();
+      router.push(`/stock/${upperQuery}`);
+      setQuery('');
+      setIsOpen(false);
+    }
+  };
+
   const showRecentSearches = !query.trim() && recentSearches.length > 0;
 
   return (
     <div className={cn("relative w-full max-w-2xl mx-auto", className)} ref={dropdownRef}>
-      <div className="relative">
+      <form onSubmit={handleSubmit} className="relative">
         <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-secondary-400 h-5 w-5 z-10" />
         <input
           ref={inputRef}
@@ -180,7 +193,7 @@ export default function SearchBar({
             <LoadingSpinner size="sm" color="primary" />
           </div>
         )}
-      </div>
+      </form>
 
       {isOpen && (
         <Card 
@@ -262,6 +275,17 @@ export default function SearchBar({
               <MagnifyingGlassIcon className="h-8 w-8 mx-auto mb-2 text-secondary-400" />
               <p>No stocks found for "{query}"</p>
               <p className="text-sm mt-1">Try searching by symbol, company name, or industry</p>
+              <button
+                onClick={() => {
+                  const upperQuery = query.trim().toUpperCase();
+                  router.push(`/stock/${upperQuery}`);
+                  setQuery('');
+                  setIsOpen(false);
+                }}
+                className="mt-3 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 text-sm"
+              >
+                Search for "{query.toUpperCase()}" anyway
+              </button>
             </div>
           )}
         </Card>
